@@ -4,7 +4,38 @@ import { SetStateAction, useState } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Avatar, Button } from "@nextui-org/react";
 import App from '@/app/usercard';
 
+type User = {
+    id: {
+        name: string;
+        value: string;
+    };
+    picture: {
+        large: string;
+        medium: string;
+        thumbnail: string;
+    };
+    name: {
+        title: string;
+        first: string;
+        last: string;
+    };
+    email: string;
+
+    nat: string;
+
+};
+
+
 export async function getStaticProps() {
+
+    try {
+    } catch (error) {
+        console.error('Failed to fetch users:', error);
+        // Return an empty array if the fetch fails
+        return {
+            props: { users: [] },
+        };
+    }
 
     // fetching data from the api
     const res = await fetch('https://randomuser.me/api/?results=3'); // fetch 2 users
@@ -23,43 +54,13 @@ export async function getStaticProps() {
         props: { users },
     };
 
-    try {
-        // Code that may throw an error
-    } catch (error) {
-        console.error('Failed to fetch users:', error);
-        // Return an empty array if the fetch fails
-        return {
-            props: { users: [] },
-        };
-    }
 }
 
 export default function Users({ users }: { users: Array<any> }) {
 
-    type User = {
-        id: {
-            name: string;
-            value: string;
-        };
-        picture: {
-            large: string;
-            medium: string;
-            thumbnail: string;
-        };
-        name: {
-            title: string;
-            first: string;
-            last: string;
-        };
-        email: string;
-
-        phone: string;
-
-    };
-
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const showUserDetail = (user: SetStateAction<null>) => {
+    const showUserDetail = (user: User) => {
         setSelectedUser(user);
     };
 
@@ -85,7 +86,8 @@ export default function Users({ users }: { users: Array<any> }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {users.map((user: User) => (
-                    <div key={user.id.value} onClick={() => showUserDetail(user)} style={{ cursor: 'pointer', fontFamily: 'Roboto, sans-serif', margin: '10px', padding: '10px', border: '1px solid darkgray', borderRadius: 20 }}>
+                    <div key={user.id.value} onClick={() => showUserDetail(user)} 
+                    style={{ cursor: 'pointer', fontFamily: 'Roboto, sans-serif', margin: '10px', padding: '10px', border: '1px solid darkgray', borderRadius: 20 }}>
                         <img src={user.picture} alt={user.name || ''} style={{ width: '50px', height: '50px' }} />
                         <p>{user.name}</p>
                         <p>{user.email}</p>
@@ -108,7 +110,7 @@ export default function Users({ users }: { users: Array<any> }) {
                     <h2>{selectedUser.name}</h2>
                     <img src={selectedUser.picture} alt={selectedUser.name} />
                     <p>Email: {selectedUser.email}</p>
-                    <p>Phone number: {selectedUser.phone}</p>
+                    <p>Nationality: {selectedUser.nat}</p>
                     <button onClick={closeDetail}>Close</button>
                 </div>
             )}
