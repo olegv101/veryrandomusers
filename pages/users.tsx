@@ -85,8 +85,7 @@ export default function Users({ users }: { users: Array<any> }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {users.map((user: User) => (
-                    <div key={user.id} onClick={() => showUserDetail(user)} style={{ cursor: 'pointer', fontFamily: 'Roboto, sans-serif', margin: '10px', padding: '10px', border: '1px solid darkgray', borderRadius: 20
-                }}>
+                    <div key={user.id.value} onClick={() => showUserDetail(user)} style={{ cursor: 'pointer', fontFamily: 'Roboto, sans-serif', margin: '10px', padding: '10px', border: '1px solid darkgray', borderRadius: 20 }}>
                         <img src={user.picture} alt={user.name || ''} style={{ width: '50px', height: '50px' }} />
                         <p>{user.name}</p>
                         <p>{user.email}</p>
@@ -115,7 +114,7 @@ export default function Users({ users }: { users: Array<any> }) {
             )}
 
             <h1 style = {{textAlign: 'center', fontFamily: 'Roboto, sans-serif'}}>
-                This looks bad because I tried to use page navigation and I think the styles I defined aren't being applied to this page 'for some reason that i dont know'
+                This looks bad because I tried to use page navigation and I think the styles I defined arent being applied to this page for some reason that i dont know
                 <Link href="/">Go back</Link>
             </h1>
         </div>
