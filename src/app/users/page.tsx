@@ -10,6 +10,9 @@ type User = {
         name: string;
         value: string;
     };
+    login: {
+        uuid: string;
+    }
     picture: {
         large: string;
         medium: string;
@@ -21,6 +24,8 @@ type User = {
         last: string;
     };
     email: string;
+
+
 
 };
 
@@ -74,7 +79,7 @@ export default function Users() {
           const res = await fetch('https://randomuser.me/api/?results=3');
           if (!res.ok) throw new Error('Failed to fetch');
           const data = await res.json();
-          const users = data.results.map(user => ({
+          const users = data.results.map((user: User) => ({
             id: user.login.uuid,
             name: `${user.name.first} ${user.name.last}`,
             email: user.email,
@@ -119,8 +124,8 @@ export default function Users() {
                 {users.map((user: User) => (
                     <div key={user.id.value} onClick={() => showUserDetail(user)} 
                     style={{ cursor: 'pointer', fontFamily: 'Roboto, sans-serif', margin: '10px', padding: '10px', border: '1px solid darkgray', borderRadius: 20 }}>
-                        <img src={user.picture} alt={user.name || ''} className="w-12 h-12" />
-                        <p>{user.name}</p>
+                        <img src={user.picture.large} alt={user.name.first || ''} className="w-12 h-12" />
+                        <p>{user.name.first}{user.name.last}</p>
                         <p>{user.email}</p>
                     </div>
                 ))}
@@ -128,8 +133,8 @@ export default function Users() {
 
             {selectedUser && (
                 <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 border border-light-gray rounded-lg">
-                    <h2>{selectedUser.name}</h2>
-                    <img src={selectedUser.picture} alt={selectedUser.name} />
+                    <h2>{selectedUser.name.first}{selectedUser.name.last}</h2>
+                    <img src={selectedUser.picture.large} alt={selectedUser.name.first} />
                     <p>Email: {selectedUser.email}</p>
                     <p>All details JSON file: {JSON.stringify(selectedUser)}</p>
                     <button onClick={closeDetail}>Close</button>
@@ -137,7 +142,7 @@ export default function Users() {
             )}
 
             <h1 style = {{textAlign: 'center', fontFamily: 'Roboto, sans-serif'}}>
-                Don't mind this text
+                Dont mind this text
                 <Link href="/">Go back</Link>
             </h1>
             {/* <App></App> */}
