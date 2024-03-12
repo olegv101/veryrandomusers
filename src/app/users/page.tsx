@@ -29,42 +29,6 @@ type User = {
 
 };
 
-
-// export async function getStaticProps() {
-
-//     try {
-//     } catch (error) {
-//         console.error('Failed to fetch users:', error);
-//         // Return an empty array if the fetch fails
-//         return {
-//             props: { users: [] },
-//         };
-//     }
-
-//     // fetching data from the api
-//     const res = await fetch('https://randomuser.me/api/?results=3'); // fetch 2 users
-//     const data = await res.json();
-
-//     if (!res.ok) {
-//         // This will activate the closest `error.js` Error Boundary
-//         throw new Error('Failed to fetch data')
-//       }
-
-//     // transforming the data a lil
-//     const users = data.results.map((user: { login: { uuid: any; }; name: { first: any; last: any; }; email: any; picture: { large: any; }; number: string }) => ({
-//         id: user.login.uuid,
-//         name: `${user.name.first} ${user.name.last}`,
-//         email: user.email,
-//         picture: user.picture.large, // using a larger picture
-//     }));
-
-//     //so we can use users as a prop
-//     return {
-//         props: { users },
-//     };
-
-// }
-
 export default function Users() {
 
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
