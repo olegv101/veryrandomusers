@@ -1,5 +1,6 @@
 import React from "react";
 import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
+import Users from "./users/page";
 
 export default function App() {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -10,7 +11,7 @@ export default function App() {
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
           <div className="flex flex-col gap-1 items-start justify-center">
-            <h4 className="text-small font-semibold leading-none text-default-600">Zoey Lang</h4>
+            <h4 className="text-small font-semibold leading-none text-default-600"></h4>
             <h5 className="text-small tracking-tight text-default-400">@zoeylang</h5>
           </div>
         </div>

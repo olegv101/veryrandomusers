@@ -44,7 +44,7 @@ type User = {
 //     // fetching data from the api
 //     const res = await fetch('https://randomuser.me/api/?results=3'); // fetch 2 users
 //     const data = await res.json();
-    
+
 //     if (!res.ok) {
 //         // This will activate the closest `error.js` Error Boundary
 //         throw new Error('Failed to fetch data')
@@ -74,25 +74,25 @@ export default function Users() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-      async function fetchUsers() {
-        try {
-          const res = await fetch('https://randomuser.me/api/?results=3');
-          if (!res.ok) throw new Error('Failed to fetch');
-          const data = await res.json();
-          const users = data.results.map((user: User) => ({
-            id: user.login.uuid,
-            name: `${user.name.first} ${user.name.last}`,
-            email: user.email,
-            picture: user.picture.large,
-          }));
-          setUsers(users);
-        } catch (error) {
-          console.error('Failed to fetch users:', error);
-          setUsers([]);
+        async function fetchUsers() {
+            try {
+                const res = await fetch('https://randomuser.me/api/?results=8');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+                const users = data.results.map((user: User) => ({
+                    id: user.login.uuid,
+                    name: `${user.name.first} ${user.name.last}`,
+                    email: user.email,
+                    picture: user.picture.large,
+                }));
+                setUsers(users);
+            } catch (error) {
+                console.error('Failed to fetch users:', error);
+                setUsers([]);
+            }
         }
-      }
-  
-      fetchUsers();
+
+        fetchUsers();
     }, []);
 
 
@@ -106,47 +106,50 @@ export default function Users() {
     };
 
     return (
-        <div style = {{}}>
-        
-        <div style={{
-            justifyContent: 'center',
-            alignItems: 'center',
+        <div>
 
-        }}>
-            <h1 style={{
-                color: 'black',
-                fontWeight: 'bold',
-                fontSize: 100, textAlign: 'center',
-                fontFamily: 'Roboto, sans-serif'
-            }}>Users</h1>
+            <div style={{
+                justifyContent: 'center',
+                alignItems: 'center',
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {users.map((user: User) => (
-                    <div key={user.id.value} onClick={() => showUserDetail(user)} 
-                    style={{ cursor: 'pointer', fontFamily: 'Roboto, sans-serif', margin: '10px', padding: '10px', border: '1px solid darkgray', borderRadius: 20 }}>
-                        <img src={user.picture.large} alt={user.name.first || ''} className="w-12 h-12" />
-                        <p>{user.name.first}{user.name.last}</p>
-                        <p>{user.email}</p>
-                    </div>
-                ))}
-            </div>
+            }}>
+                <h1 style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: 100, textAlign: 'center',
+                    fontFamily: 'Roboto, sans-serif'
+                }}>Users</h1>
 
-            {selectedUser && (
-                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 border border-light-gray rounded-lg">
-                    <h2>{selectedUser.name.first}{selectedUser.name.last}</h2>
-                    <img src={selectedUser.picture.large} alt={selectedUser.name.first} />
-                    <p>Email: {selectedUser.email}</p>
-                    <p>All details JSON file: {JSON.stringify(selectedUser)}</p>
-                    <button onClick={closeDetail}>Close</button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {users.map((user: User) => (
+                        <div key={user.id.value} onClick={() => showUserDetail(user)}
+                            style={{ cursor: 'pointer', fontFamily: 'Roboto, sans-serif', margin: '10px', padding: '10px', border: '1px solid gray', borderRadius: 12, backgroundColor: '#222222' }}>
+                            <img src={user.picture} alt={user.name || ''} className="w-12 h-12" />
+                            <p>{user.name}</p>
+                            <p>{user.email}</p>
+                        </div>
+                    ))}
                 </div>
-            )}
 
-            <h1 style = {{textAlign: 'center', fontFamily: 'Roboto, sans-serif'}}>
-                Dont mind this text
-                <Link href="/">Go back</Link>
-            </h1>
-            {/* <App></App> */}
-        </div>
+                {selectedUser && (
+                    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray bg-opacity-20 backdrop-blur-xl p-5 border border-gray rounded-lg">                        <h2>{selectedUser.name.first}{selectedUser.name.last}</h2>
+                        <img src={selectedUser.picture} alt={selectedUser.name.last} />
+                        <p>Email: {selectedUser.email}</p>
+                        <p>All details JSON file: {JSON.stringify(selectedUser)}</p>
+                        <Button onClick={closeDetail} className = "m-2">Close</Button>
+                    </div>
+                )}
+                <h1 style={{ textAlign: 'center', fontFamily: 'Roboto, sans-serif' }}>
+                    <Button className = " m-20 ">
+                        <Link href="/">Go back</Link>
+                    </Button>
+                </h1>
+
+                <div className="flex items-center justify-center min-h-screen">
+                    <App></App>
+                </div>
+
+            </div>
         </div>
     );
 }
